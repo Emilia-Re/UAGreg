@@ -112,7 +112,7 @@ def set_optimizer(args, model):
 
     # LOADING AN OPTIMIZER
     if args.optim == 'sgd':
-        optimizer = optim.SGD(grouped_parameters, lr=args.lr, momentum=0.9, weight_decay=args.weight_decay)
+        optimizer = optim.SGD(grouped_parameters, lr=args.lr, momentum=0.9, weight_decay=float(args.weight_decay))
     elif args.optim == 'adam':
         optimizer = optim.Adam(grouped_parameters, lr=args.lr)
     else:
@@ -144,8 +144,7 @@ class Logger(object):
     def __init__(self, log_path, log_name='log.txt', local_rank=0, save_writer=False):
         self.local_rank = local_rank
         if self.local_rank in [-1, 0]:
-            if not os.path.exists(log_path):
-                os.mkdir(log_path)
+            os.makedirs(log_path,exist_ok=True)
             self.path = log_path
             self.log_name = log_name
             open(os.path.join(self.path, self.log_name), 'w').close()

@@ -53,7 +53,7 @@ def get_parser():
     parser.add_argument('--lr', '--learning_rate', default=0.03, type=float, help='initial learning rate')
     parser.add_argument('--lr_scheduler', default='cosine', type=str, choices=['cosine', 'step_decay'], help='scheduler name')
     parser.add_argument('--warm_up', default=0, type=float, help='warm_up epochs (unlabeled data based)')
-    parser.add_argument('--weight_decay', default=5e-4, type=float, help='weight decay')
+    parser.add_argument('--weight_decay', default=0.0005, type=float, help='weight decay')
     parser.add_argument('--nesterov', action='store_true', default=True, help='use nesterov momentum')
     # OTHERS
     parser.add_argument('--total_step', default=2**19, type=int, help='number of total steps to run')

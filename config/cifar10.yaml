@@ -6,14 +6,14 @@ num_labeled: 600
 #
 dataset: cifar10
 arch: wideresnet
-out: ../results/cifar10_600_CORRELATED
+out: ./results/cifar10_600_CORRELATED
 # PARAMS FOR "DATASET"
 num_classes: 6
 mu: 4
 # PARAMS FOR "OPTIMIZER"
 
 lr: 0.03
-weight_decay: 5e-4
+weight_decay: 0.0005
 # PARAMS FOR "SSL"
 start_u: 0
 conf_th: 0.0

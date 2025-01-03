@@ -15,6 +15,11 @@ To prepare the datasets above, follow [CSI](https://github.com/alinlab/CSI), [Op
 
 All datasets are supposed to be under ./data.
 
+### PathMapping
+```
+D:\DeepLearningCode\UAGreg=/root/nas-public-linkdata/UAGreg
+```
+
 ### Train
 
 Train the model for CIFAR-10 dataset under correlated and uncorrelated settings:
