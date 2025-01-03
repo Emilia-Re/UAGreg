@@ -30,7 +30,7 @@ def get_parser():
                         help="apex AMP optimization level selected in ['O0', 'O1', 'O2', and 'O3']."
                              "See details at https://nvidia.github.io/apex/amp.html")
     # SAVE CONFIG
-    parser.add_argument('--root', default='../data', type=str, help='path to data directory')
+    parser.add_argument('--root', default='./data', type=str, help='path to data directory')
     parser.add_argument('--out', default='result', help='directory to output the result')
     parser.add_argument('--resume', default='', type=str, help='path to latest checkpoint (default: none)')
 

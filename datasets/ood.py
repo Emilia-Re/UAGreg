@@ -6,7 +6,7 @@ import torch
 from torchvision import datasets, transforms
 
 
-DATA_PATH = '../data'
+DATA_PATH = './data'
 
 cifar10_mean = (0.4914, 0.4822, 0.4465)
 cifar10_std = (0.2471, 0.2435, 0.2616)
@@ -67,7 +67,7 @@ def get_ood(dataset, id, test_only=False, image_size=None):
                                  transform=test_transform)
 
     elif dataset == 'lsun':
-        test_dir = os.path.join(DATA_PATH, 'LSUN_fix')
+        test_dir = r'/root/nas-public-linkdata/Data/LSUN/LSUN'
         test_set = datasets.ImageFolder(test_dir, transform=test_transform)
 
     elif dataset == 'imagenet':

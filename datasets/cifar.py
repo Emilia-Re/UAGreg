@@ -12,7 +12,7 @@ cifar100_mean = (0.5071, 0.4867, 0.4408)
 cifar100_std = (0.2675, 0.2565, 0.2761)
 
 
-def get_cifar10(args, root='../data/'):
+def get_cifar10(args, root='./data/'):
     args.total_class = 10
 
     ### LOAD LABELED & UNLABELED DATASETS FOR TRAINING ###
@@ -40,7 +40,7 @@ def get_cifar10(args, root='../data/'):
     return labeled_dataset, unlabeled_dataset, test_dataset, val_dataset
 
 
-def get_cifar100(args, root='../data/'):
+def get_cifar100(args, root='./data/'):
     args.total_class = 100
 
     ### LOAD LABELED & UNLABELED DATASETS FOR TRAINING ###
