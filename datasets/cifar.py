@@ -44,7 +44,7 @@ def get_cifar100(args, root='./data/'):
     args.total_class = 100
 
     ### LOAD LABELED & UNLABELED DATASETS FOR TRAINING ###
-    base_dataset = ModifiedCIFAR100(args, root, train=True, download=True)
+    base_dataset = ModifiedCIFAR100(args, root, train=True, download=False)
     base_dataset.targets = np.array(base_dataset.targets)
     labeled_idx, unlabeled_idx, val_idx = x_u_v_split(args, base_dataset.targets)
 
