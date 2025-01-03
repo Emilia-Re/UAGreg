@@ -115,6 +115,8 @@ def train_loop(
         losses_g = AverageMeter()
         mask_probs = AverageMeter()
 
+
+        ### SET Threshold ###
         if epoch > 0:
             curr_lower_th, curr_upper_th = get_threshold(args, unlabeled_dataset_all, model)
             lower_th = args.momentum * lower_th + (1. - args.momentum) * curr_lower_th
@@ -128,6 +130,7 @@ def train_loop(
         model.train()
         model.zero_grad()
         for b_idx in p_bar:
+            ### Prepare Data ###
             try:
                 (_, inputs_x_s, inputs_x), targets_x = next(labeled_iter)
             except:
