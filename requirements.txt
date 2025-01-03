@@ -10,9 +10,9 @@ certifi==2022.9.24
 cffi==1.15.1
 chardet==4.0.0
 charset-normalizer==2.0.4
-conda==22.11.1
-conda-build==3.23.3
-conda-package-handling==1.9.0
+#conda==22.11.1
+#conda-build==3.23.3
+#conda-package-handling==1.9.0
 cryptography==38.0.1
 decorator==5.1.1
 dnspython==2.2.1

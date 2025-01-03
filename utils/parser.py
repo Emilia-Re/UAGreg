@@ -1,5 +1,18 @@
 import argparse
 
+import yaml
+
+
+def over_write_args_from_file(args, yml):
+    """
+    overwrite arguments acocrding to config file
+    """
+    if yml == '':
+        return
+    with open(yml, 'r', encoding='utf-8') as f:
+        dic = yaml.load(f.read(), Loader=yaml.Loader)
+        for k in dic:
+            setattr(args, k, dic[k])
 
 def get_parser():
     parser = argparse.ArgumentParser(description='[PyTorch] OPEN-SET SSL')
@@ -64,6 +77,9 @@ def get_parser():
     parser.add_argument('--momentum', default=0.9, type=float, help='')
     # OTHER CONFIG
     # parser.add_argument('--', default=, type=, help='')
+    # config file
+    parser.add_argument('--c', type=str, default='must be specified !')
 
     args = parser.parse_args()
+    over_write_args_from_file(args, args.c)
     return args

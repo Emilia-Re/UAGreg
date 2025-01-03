@@ -1,0 +1,38 @@
+# BASE SETTINGS
+
+trainer: uagreg
+
+num_labeled: 600
+#
+dataset: cifar10
+arch: wideresnet
+out: ../results/cifar10_600_CORRELATED
+# PARAMS FOR "DATASET"
+num_classes: 6
+mu: 4
+# PARAMS FOR "OPTIMIZER"
+
+lr: 0.03
+weight_decay: 5e-4
+# PARAMS FOR "SSL"
+start_u: 0
+conf_th: 0.0
+lambda_u: 1.0
+# PARAMS FOR "OUTLIER DETECTOR"
+temp_o: 1.5
+momentum: 0.9
+# PARAMS FOR "GRAPH CONTRASTIVE LEARNING"
+graph_th: 0.8
+lambda_g: 1.0
+T: 0.2
+#
+#total_step: 204800 # TOTAL_STEP :  1024*200
+#eval_step: 1024
+#batch_size: 64
+#gpu_id: 1
+
+#for debug
+total_step: 10 # TOTAL_STEP :  1024*200
+eval_step: 10
+batch_size: 64
+gpu_id: 1

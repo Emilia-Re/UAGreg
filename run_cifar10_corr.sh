@@ -1,14 +1,13 @@
 # BASE SETTINGS
-gpu_id=1
+gpu_id=$1
 trainer=uagreg
-
-num_labeled=600
-#
+# 
 dataset=cifar10
 arch=wideresnet
-out=../results/${trainer}_${dataset}_${num_labeled}_CORRELATED
+out=../results/${trainer}_${dataset}_$2_CORRELATED
 # PARAMS FOR "DATASET"
 num_classes=6
+num_labeled=$2
 mu=4
 # PARAMS FOR "OPTIMIZER"
 total_step=204800 # TOTAL_STEP = 1024*200
@@ -27,7 +26,6 @@ momentum=0.9
 graph_th=0.8
 lambda_g=1.0
 T=0.2
-
 # RUN
 CUDA_VISIBLE_DEVICES=$gpu_id python main.py --trainer $trainer --out $out --mu $mu \
                                             --dataset $dataset --num_classes $num_classes --num_labeled $num_labeled \
