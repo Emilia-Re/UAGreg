@@ -1,17 +1,21 @@
 # BASE SETTINGS
-gpu_id=$1
+gpu_id=0
 trainer=uagreg
 # 
 dataset=cifar10
 arch=wideresnet
-out=../results/${trainer}_${dataset}_$2_CORRELATED
+total_labeled=100
+out=../results/${trainer}_${dataset}_${total_labeled}_CORRELATED
 # PARAMS FOR "DATASET"
 num_classes=6
-num_labeled=$2
+num_labeled=${total_labeled}
 mu=4
 # PARAMS FOR "OPTIMIZER"
-total_step=204800 # TOTAL_STEP = 1024*200
-eval_step=1024
+#total_step=204800 # TOTAL_STEP = 1024*200
+#eval_step=1024
+total_step=64 # TOTAL_STEP = 1024*200
+eval_step=64
+
 batch_size=64
 lr=0.03
 weight_decay=5e-4

@@ -118,8 +118,12 @@ class WideResNet(nn.Module):
         x = F.adaptive_avg_pool2d(x, 1)
         x = x.view(-1, self.out_dim)
 
+        ### 分类头 ###
         out = self.fc(x)
+        ### 结构相同但是参数不同的分类头 ###
         out_open = self.fc_open(x)
+
+        ###  feat过了一个相同输入输出的Linear layer，Leaky Relu， 维度减半的Linear layer，Normalize ###
         proj = self.proj(x)
         return out, out_open, proj
 

@@ -2,13 +2,14 @@
 
 trainer: uagreg
 
-num_labeled: 600
+#总的标记数量
+num_labeled: 6000
 #
-dataset: cifar10
-arch: wideresnet
-out: ./results/cifar10_600_CORRELATED
+dataset: imagenet
+arch: resnet18
+out: ./results/imagenet30
 # PARAMS FOR "DATASET"
-num_classes: 6
+num_classes: 20
 mu: 4
 # PARAMS FOR "OPTIMIZER"
 
@@ -25,8 +26,9 @@ momentum: 0.9
 graph_th: 0.8
 lambda_g: 1.0
 T: 0.2
+expand_labels: True
 #
-#total_step: 204800 # TOTAL_STEP :  1024*200
+#total_step: 102400 # TOTAL_STEP :  1024*200
 #eval_step: 1024
 #batch_size: 64
 #gpu_id: 1
@@ -35,4 +37,4 @@ T: 0.2
 total_step: 10 # TOTAL_STEP :  1024*200
 eval_step: 10
 batch_size: 64
-gpu_id: 1
+gpu_id: 0

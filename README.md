@@ -23,6 +23,12 @@ D:\DeepLearningCode\UAGreg=/root/nas-public-linkdata/UAGreg
 ### Train
 
 Train the model for CIFAR-10 dataset under correlated and uncorrelated settings:
+<br>
+
+最新的启动方式
+```
+python main.py --c config_file
+```
 
 ```
 sh run_cifar10_corr.sh (gpu_id) (num_labeled)

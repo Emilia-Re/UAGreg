@@ -150,22 +150,22 @@ def train_loop(
                 (inputs_u_w, inputs_u_s1, inputs_u_s2), _ = next(unlabeled_iter)
 
             data_time.update(time.time() - end)
-            bl_size = inputs_x.shape[0]
+            l_batch_size = inputs_x.shape[0]
             bu_size = inputs_u_w.shape[0]
 
-            inputs_all = torch.cat([inputs_u_w, inputs_u_s1, inputs_u_s2], 0)
-            inputs = torch.cat([inputs_x, inputs_x_s, inputs_all], 0).to(args.device)
+            inputs_u = torch.cat([inputs_u_w, inputs_u_s1, inputs_u_s2], 0)
+            inputs = torch.cat([inputs_x, inputs_x_s, inputs_u], 0).to(args.device)
             targets_x = targets_x.to(args.device)
 
             ## FORWARD PROPAGATION ##
             outputs, outputs_open, feats = model(inputs)
-            feats_u_w, feats_u_s1, feats_u_s2 = feats[2*bl_size:].chunk(3)
-            outputs_u_w, outputs_u_s1, outputs_u_s2 = outputs[2*bl_size:].chunk(3)
-            outputs_open_u_w, outputs_open_u_s1, outputs_open_u_s2 = outputs_open[2*bl_size:].chunk(3)
+            feats_u_w, feats_u_s1, feats_u_s2 = feats[2*l_batch_size:].chunk(3)
+            outputs_u_w, outputs_u_s1, outputs_u_s2 = outputs[2*l_batch_size:].chunk(3)
+            outputs_open_u_w, outputs_open_u_s1, outputs_open_u_s2 = outputs_open[2*l_batch_size:].chunk(3)
 
             ## SUPERIVSED LOSS FOR LABELED SAMPLES ##
-            loss_s = F.cross_entropy(outputs[:2*bl_size], targets_x.repeat(2), reduction='mean')
-            loss_s += F.cross_entropy(outputs_open[:2*bl_size], targets_x.repeat(2), reduction='mean')
+            loss_s = F.cross_entropy(outputs[:2*l_batch_size], targets_x.repeat(2), reduction='mean')
+            loss_s += F.cross_entropy(outputs_open[:2*l_batch_size], targets_x.repeat(2), reduction='mean')
 
             """ CONTRIBUTION_1. """
             ## PENALIZING LOSS FOR OUTLIER SAMPLES ##
@@ -178,9 +178,10 @@ def train_loop(
             #
             me_max = True
             if me_max:
+                #TODO: 我感觉这里写的不对 ，他写的是ood数据softmax平均值的熵，而不是所有ood数据熵求和后的平均值
                 probs = torch.softmax(outputs_open_u_w, dim=1)
                 avg_probs = (probs[ood_mask]).mean(dim=0)
-                loss_o = -torch.sum(-avg_probs * torch.log(avg_probs + 1e-8))
+                loss_o = -torch.sum(-avg_probs * torch.log(avg_probs + 1e-8))  ###  负的ood数据的熵的作为损失 ###
             else:
                 loss_o = torch.zeros(1).to(args.device).mean()
 
@@ -193,20 +194,22 @@ def train_loop(
                     probs = torch.softmax(outputs_u_w, dim=1)
 
                 # EMBEDDING SIMILARITY
+                #
                 sim = torch.exp(torch.mm(feats_u_s1, feats_u_s2.t()) / args.T) 
                 sim_probs = sim / sim.sum(1, keepdim=True)
 
                 # PSEUDO-LABEL GRAPH
-                Q = torch.mm(probs, probs.t())
+                Q = torch.mm(probs, probs.t()) #Q 是cosine相似性矩阵
                 Q.fill_diagonal_(1)
                 pos_mask = (Q >= args.graph_th).float()
-                graph_mask = (graph_mask.unsqueeze(0) == graph_mask.unsqueeze(-1)).float()
+                graph_mask = (graph_mask.unsqueeze(0) == graph_mask.unsqueeze(-1)).float() #不明白这个mask在做什么
 
                 Q = Q * pos_mask
                 Q = Q * graph_mask
                 Q = Q / Q.sum(1, keepdim=True)
 
                 # CONTRASTIVE LOSS
+                #TODO:没看懂这里的对比损失在干什么
                 loss_g = -(torch.log(sim_probs + 1e-7) * Q).sum(1)
                 loss_g = loss_g.mean()
             else:

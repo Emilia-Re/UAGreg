@@ -1,0 +1,41 @@
+# BASE SETTINGS
+
+trainer: uagreg
+
+#总的标记数量
+num_labeled: 100
+#
+dataset: cifar100
+arch: wideresnet
+out: ./results/cifar100_600_CORRELATED
+# PARAMS FOR "DATASET"
+num_classes: 60
+mu: 4
+# PARAMS FOR "OPTIMIZER"
+
+lr: 0.03
+weight_decay: 0.0005
+# PARAMS FOR "SSL"
+start_u: 0
+conf_th: 0.0
+lambda_u: 1.0
+# PARAMS FOR "OUTLIER DETECTOR"
+temp_o: 1.5
+momentum: 0.9
+# PARAMS FOR "GRAPH CONTRASTIVE LEARNING"
+graph_th: 0.8
+lambda_g: 1.0
+T: 0.2
+expand_labels: True
+label_biased: True
+#
+#total_step: 204800 # TOTAL_STEP :  1024*200
+#eval_step: 1024
+#batch_size: 64
+#gpu_id: 1
+
+#for debug
+total_step: 10 # TOTAL_STEP :  1024*200
+eval_step: 10
+batch_size: 64
+gpu_id: 0
