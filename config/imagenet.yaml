@@ -3,7 +3,7 @@
 trainer: uagreg
 
 #总的标记数量
-num_labeled: 6000
+num_labeled: 100
 #
 dataset: imagenet
 arch: resnet18
@@ -28,13 +28,13 @@ lambda_g: 1.0
 T: 0.2
 expand_labels: True
 #
-#total_step: 102400 # TOTAL_STEP :  1024*200
-#eval_step: 1024
-#batch_size: 64
-#gpu_id: 1
+total_step: 102400 # TOTAL_STEP :  1024*200
+eval_step: 1024
+batch_size: 64
+gpu_id: 2
 
 #for debug
-total_step: 10 # TOTAL_STEP :  1024*200
-eval_step: 10
-batch_size: 64
-gpu_id: 0
+#total_step: 10 # TOTAL_STEP :  1024*200
+#eval_step: 1
+#batch_size: 64
+#gpu_id: 2
